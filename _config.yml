@@ -1,0 +1,4 @@
+title: Plugin Documentation
+description: GitHub Pages site for plugin documentation
+theme: jekyll-theme-cayman
+markdown: kramdown

@@ -17,6 +17,8 @@ Start here: [McMMOParties Overview](plugins/mcmmoparties/README.md)
 
 Sub-pages:
 
-- [Commands](plugins/mcmmoparties/commands.md)
-- [Permissions](plugins/mcmmoparties/permissions.md)
-- [Configuration](plugins/mcmmoparties/configuration.md)
+| Section | Description |
+| --- | --- |
+| [Commands](commands.md) | List of available plugin commands and usage (including permissions) |
+| [Configuration](configuration.md) | Main config structure and example values |
+| [API Information](api_information.md) | Learn how to hook into McMMOParties into your own plugins |

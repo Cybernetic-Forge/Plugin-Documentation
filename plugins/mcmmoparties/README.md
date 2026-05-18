@@ -13,8 +13,7 @@ Use the sections below to find what you need quickly:
 
 | Section | Description |
 | --- | --- |
-| [Commands](commands.md) | List of available plugin commands and usage |
-| [Permissions](permissions.md) | Permission nodes and what they allow |
+| [Commands](commands.md) | List of available plugin commands and usage (including permissions) |
 | [Configuration](configuration.md) | Main config structure and example values |
 
 > This page currently contains placeholder content and is ready for expansion.

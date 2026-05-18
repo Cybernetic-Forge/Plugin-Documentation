@@ -4,7 +4,6 @@ nav_order: 1
 ---
 
 # Plugin Documentation
-
 Welcome to the official plugin documentation portal of Cybernetic-Forge.
 
 **Note**
@@ -16,7 +15,10 @@ This documentation is primarly AI-generated and meant to provide a first overvie
 
 ### McMMOParties
 
-Start here:
+Start here: [McMMOParties Overview](plugins/mcmmoparties/README.md)
+
+Sub-pages:
+
 | Section | Description |
 | --- | --- |
 | [Commands](commands.md) | List of available plugin commands and usage (including permissions) |

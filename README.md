@@ -1,6 +1,7 @@
 ---
 title: Home
 nav_order: 1
+nav_exclude: true
 ---
 
 # Plugin Documentation
@@ -21,6 +22,7 @@ Sub-pages:
 
 | Section | Description |
 | --- | --- |
-| [Commands](commands.md) | List of available plugin commands and usage (including permissions) |
-| [Configuration](configuration.md) | Main config structure and example values |
-| [API Information](api_information.md) | Learn how to hook into McMMOParties into your own plugins |
+| [Commands](plugins/mcmmoparties/commands.md) | List of available plugin commands and usage (including permissions) |
+| [Configuration](plugins/mcmmoparties/configuration.md) | Main config structure and example values |
+| [API Information](plugins/mcmmoparties/api_information.md) | Learn how to hook into McMMOParties into your own plugins |
+| [Tebex Integration](plugins/mcmmoparties/tebex_integration.md) | Secure Tebex setup using environment variables (no hardcoded credentials) |

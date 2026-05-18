@@ -1,3 +1,8 @@
+---
+title: Home
+nav_order: 1
+---
+
 # Plugin Documentation
 
 Welcome to the official plugin documentation portal.

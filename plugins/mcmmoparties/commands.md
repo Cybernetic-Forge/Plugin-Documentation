@@ -1,3 +1,10 @@
+---
+title: Commands
+parent: McMMOParties
+nav_order: 1
+has_toc: true
+---
+
 # McMMOParties Commands
 
 Below is placeholder command documentation for now.

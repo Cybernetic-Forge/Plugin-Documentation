@@ -1,3 +1,10 @@
+---
+title: Configuration
+parent: McMMOParties
+nav_order: 3
+has_toc: true
+---
+
 # McMMOParties Configuration
 
 Below is placeholder configuration documentation for now.

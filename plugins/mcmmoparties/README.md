@@ -1,3 +1,10 @@
+---
+title: McMMOParties
+nav_order: 2
+has_children: true
+has_toc: true
+---
+
 # McMMOParties
 
 Welcome to the documentation for **McMMOParties**.

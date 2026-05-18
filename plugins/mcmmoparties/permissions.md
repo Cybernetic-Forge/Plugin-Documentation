@@ -1,3 +1,10 @@
+---
+title: Permissions
+parent: McMMOParties
+nav_order: 2
+has_toc: true
+---
+
 # McMMOParties Permissions
 
 Below is placeholder permission documentation for now.

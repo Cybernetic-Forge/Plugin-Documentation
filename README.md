@@ -5,9 +5,7 @@ nav_order: 1
 
 # Plugin Documentation
 
-Welcome to the official plugin documentation portal.
-
-This site is structured to be both **GitBook-ready** and **GitHub Pages-friendly**.
+Welcome to the official plugin documentation portal of Cybernetic-Forge.
 
 ## Available Plugins
 
@@ -15,8 +13,5 @@ This site is structured to be both **GitBook-ready** and **GitHub Pages-friendly
 
 Start here: [McMMOParties Overview](plugins/mcmmoparties/README.md)
 
-Sub-pages:
-
-- [Commands](plugins/mcmmoparties/commands.md)
-- [Permissions](plugins/mcmmoparties/permissions.md)
-- [Configuration](plugins/mcmmoparties/configuration.md)
+- [Commands](plugins/mcmmoparties/commands.md)<br>
+- [Configuration](plugins/mcmmoparties/configuration.md)<br>

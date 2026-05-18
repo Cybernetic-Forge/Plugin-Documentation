@@ -7,19 +7,19 @@ has_toc: true
 
 # McMMOParties API Information
 
-McMMOParties exposes a small but useful Bukkit-facing API for:
+McMMOParties exposes a Bukkit-facing API for:
 
 - reading loaded parties
 - looking up a player's party
-- using helper service methods for party admin-style operations
+- using helper service methods for party and buff operations
 - listening to cancellable party events
-- triggering built-in event handlers for integrations
+- triggering built-in event handler flows for integrations
 
 ## Main Entry Point
 
-The static entry point is [McMMOPartyAPI.java](C:/Users/maksy/IdeaProjects/McMMOParties/src/main/java/net/maksy/mcmmoparties/api/McMMOPartyAPI.java:1).
+The static entry point is `McMMOPartyAPI.java`.
 
-It exposes three main accessors:
+It exposes:
 
 - `McMMOPartyAPI.getPartyLoader()`
 - `McMMOPartyAPI.getPartyService()`
@@ -38,11 +38,11 @@ McMMOParty party = McMMOPartyAPI.getPartyLoader().getParty("my_party");
 
 ### `PartyLoader`
 
-`PartyLoader` is the loaded in-memory party registry. See [PartyLoader.java](C:/Users/maksy/IdeaProjects/McMMOParties/src/main/java/net/maksy/mcmmoparties/configuration/PartyLoader.java:11).
+`PartyLoader` is the in-memory party registry. See `PartyLoader.java`.
 
 Main capabilities:
 
-- `getParty(String partyID)`: lookup by normalized party id
+- `getParty(String partyID)`: lookup by party id
 - `getParties()`: get all loaded parties
 - `getPartyNames()`: get all loaded party ids
 - `getPartyOfPlayer(UUID uuid)`: find the party a player belongs to
@@ -50,15 +50,15 @@ Main capabilities:
 - `scheduleSave(McMMOParty party)`: delayed async save
 - `reload()`: async full reload from storage
 - `reload(String partyID)`: async reload of one party
-- `flushPendingSaves()`: force pending party saves
+- `flushPendingSaves()`: force pending saves
 
 Important note:
 
-- `reload()` and `reload(String)` use async SQL helpers, so if you call them and then immediately read the loader again in the same tick, you may still see old state for a moment.
+- `reload()` and `reload(String)` use async SQL helpers, so an immediate read in the same tick may still see old state briefly.
 
 ### `McMMOPartyService`
 
-`McMMOPartyService` is the higher-level helper layer. See [McMMOPartyService.java](C:/Users/maksy/IdeaProjects/McMMOParties/src/main/java/net/maksy/mcmmoparties/api/McMMOPartyService.java:15).
+`McMMOPartyService` is the higher-level helper layer. See `McMMOPartyService.java`.
 
 Lookup helpers:
 
@@ -95,17 +95,17 @@ Economy helpers:
 
 Notes:
 
-- The service methods are the safest way to perform admin-style changes because they refresh derived state like buffs, level progress, and loader cache.
+- These service methods are the safest way to perform admin-style changes because they refresh derived state like buffs, level progress, and loader cache.
 - `ABILITY_COOLDOWN_REDUCTION` is currently the only ability-specific buff branch.
 
 ### `PartyEventHandler`
 
-`PartyEventHandler` is the plugin’s internal event dispatcher. See [PartyEventHandler.java](C:/Users/maksy/IdeaProjects/McMMOParties/src/main/java/net/maksy/mcmmoparties/api/events/PartyEventHandler.java:28).
+`PartyEventHandler` is the plugin's internal event dispatcher. See `PartyEventHandler.java`.
 
 It does two jobs:
 
 - constructs and fires Bukkit events such as `PartyMemberJoinEvent`
-- performs the plugin’s built-in follow-up logic if the event is not cancelled
+- performs the plugin's built-in follow-up logic if the event is not cancelled
 
 This means you can:
 
@@ -133,7 +133,7 @@ Common dispatcher methods include:
 
 ## `McMMOParty` Model
 
-The main runtime model is [McMMOParty.java](C:/Users/maksy/IdeaProjects/McMMOParties/src/main/java/net/maksy/mcmmoparties/configuration/models/McMMOParty.java:17).
+The main runtime model is `McMMOParty.java`.
 
 Important getters and fields:
 
@@ -179,13 +179,13 @@ State update helpers:
 
 Important note:
 
-- Directly mutating a `McMMOParty` object does not automatically persist everything. If you make manual changes, follow up with a loader/service save path.
+- Directly mutating a `McMMOParty` does not automatically persist everything. If you make manual changes, follow up with a loader or service save path.
 
 ## Related Data Types
 
 ### `PartySettings`
 
-See [PartySettings.java](C:/Users/maksy/IdeaProjects/McMMOParties/src/main/java/net/maksy/mcmmoparties/configuration/models/PartySettings.java:11).
+See `PartySettings.java`.
 
 Useful capabilities:
 
@@ -197,9 +197,9 @@ Useful capabilities:
 
 ### `PartyWaypoint`
 
-See [PartyWaypoint.java](C:/Users/maksy/IdeaProjects/McMMOParties/src/main/java/net/maksy/mcmmoparties/configuration/models/PartyWaypoint.java:1).
+See `PartyWaypoint.java`.
 
-It is a record containing:
+It stores:
 
 - `partyID`
 - `server`
@@ -209,7 +209,7 @@ It is a record containing:
 
 ### `BuffUpgradeCondition`
 
-See [BuffUpgradeCondition.java](C:/Users/maksy/IdeaProjects/McMMOParties/src/main/java/net/maksy/mcmmoparties/configuration/models/BuffUpgradeCondition.java:9).
+See `BuffUpgradeCondition.java`.
 
 Condition types:
 
@@ -225,7 +225,7 @@ Each condition can describe:
 
 ## Event System
 
-All custom party events extend [PartyEvent.java](C:/Users/maksy/IdeaProjects/McMMOParties/src/main/java/net/maksy/mcmmoparties/api/events/PartyEvent.java:1).
+All custom party events extend `PartyEvent.java`.
 
 Shared behavior:
 
@@ -240,7 +240,7 @@ Shared behavior:
 | `PartyLevelChangeEvent` | Fired before the party levels up. | `nextLevel` | Change or block a level-up. |
 | `PartyExpChangeEvent` | Fired when party exp is awarded from mcMMO gain. | `amount` | Modify party exp gain. |
 | `PartyShareExpEvent` | Fired before shared exp is given to a player. | `sharedExp` | Modify or block shared exp. |
-| `PartyMemberJoinEvent` | Fired before a member joins or is invited via handler flow. | None beyond cancellation | Block join/invite logic. |
+| `PartyMemberJoinEvent` | Fired before a member joins or is invited via handler flow. | None beyond cancellation | Block join or invite logic. |
 | `PartyMemberLeaveEvent` | Fired before a member leaves. | None beyond cancellation | Block leaving logic. |
 | `PartyMemberKickEvent` | Fired before a member is kicked. | None beyond cancellation | Block kicks. |
 | `PartyLeaderChangeEvent` | Fired before leadership changes. | None beyond cancellation | Block owner transfer. |
@@ -251,7 +251,7 @@ Shared behavior:
 | `PartyTresorWithdrawEvent` | Fired before a treasury withdrawal is applied. | `amount` | Modify or block withdrawals. |
 | `PartyChatWriteEvent` | Fired before party chat is sent. | `message`, recipient list | Filter chat or retarget recipients. |
 | `PartyBuffHighlightEvent` | Fired when a player highlights a preferred buff. | `buffType`, `ability` | Remap highlight target. |
-| `PartyBuffUpgradeEvent` | Fired before a buff upgrade is purchased. | `treasuryCost` | Raise/lower upgrade cost or cancel it. |
+| `PartyBuffUpgradeEvent` | Fired before a buff upgrade is purchased. | `treasuryCost` | Raise, lower, or block upgrade cost. |
 
 ### Event Details
 
@@ -362,7 +362,7 @@ if (party != null && party.canUpgradeBuffs(player.getUniqueId())) {
 
 ## Practical Notes
 
-- Prefer `McMMOPartyService` for admin-like changes instead of directly editing SQL or half-mutating the model.
+- Prefer `McMMOPartyService` for admin-like changes instead of directly editing SQL or partially mutating the model.
 - Prefer listening to events rather than forking core command logic.
 - All custom events are cancellable, even when they do not expose extra mutable fields.
-- Some handler methods continue with async SQL follow-up work after the event is accepted, so avoid assuming every side effect is complete immediately after the method call returns.
+- Some handler methods continue with async SQL follow-up work after the event is accepted, so do not assume every side effect is complete immediately after the method call returns.

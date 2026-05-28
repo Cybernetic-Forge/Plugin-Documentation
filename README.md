@@ -1,86 +1,79 @@
 # Cybernetic-Forge Plugin Documentation
 
-This repository now targets a **Wiki.js** deployment instead of GitHub Pages / Jekyll.
+This repository is now structured for **GitHub Pages** using **MkDocs** with the **Material for MkDocs** theme.
 
-The authoritative documentation source remains the markdown in this repository on `main`. Wiki.js is the published presentation, search, and navigation layer.
+That keeps the site fully static and GitHub Pages-compatible while still giving you:
+
+- fast search
+- a documentation sidebar and tabbed navigation
+- a polished dark-first plugin aesthetic
+- built-in light and dark mode toggle
+- automated deployment through GitHub Actions
 
 ## Architecture
 
-- `plugins/`: source markdown for plugin documentation
-- `wiki-source/`: hand-authored Wiki.js landing pages and shared content
-- `wiki-content/`: generated Wiki.js Git-storage content branch payload
-- `deploy/`: Docker + Nginx reverse-proxy assets, including the Cybernetic-Forge dark/light theme layer
-- `.github/workflows/publish-wikijs-content.yml`: publishes the generated `wikijs-content` branch
-- `.github/workflows/deploy-wikijs.yml`: deploys the Wiki.js stack to a Linux host over SSH
-- `ops/WIKIJS_SETUP.md`: first-run setup guide for connecting Wiki.js to the generated content branch
+- `plugins/`: source markdown for each plugin
+- `docs-source/`: shared top-level templates and landing-page content
+- `docs/`: generated MkDocs-ready pages
+- `scripts/build_mkdocs_docs.py`: converts the source markdown into the `docs/` tree
+- `mkdocs.yml`: site configuration, navigation, theme, and markdown extensions
+- `docs/assets/stylesheets/extra.css`: Cybernetic-Forge visual theme overrides
+- `.github/workflows/deploy-pages.yml`: GitHub Pages build and deployment workflow
 
-## Why this layout
+## Authoring workflow
 
-Wiki.js stores pages in its database and can sync them to a **dedicated Git repository**. The official Git storage docs note that the target repository cannot be limited to a subfolder, so this repo uses a dedicated branch named `wikijs-content` for the synced page tree while keeping infrastructure and authoring sources on `main`.
-
-## Local workflow
-
-1. Edit plugin docs in `plugins/` or shared wiki pages in `wiki-source/`.
-2. Rebuild the Wiki.js page tree:
+1. Edit plugin docs in `plugins/`.
+2. Edit the landing page template in `docs-source/index.md` if needed.
+3. Regenerate the MkDocs content tree:
 
    ```powershell
-   python scripts/build_wikijs_content.py
+   python scripts/build_mkdocs_docs.py
    ```
 
-3. Review the generated files in `wiki-content/`.
-4. Push to `main`.
+4. Commit both the source changes and the regenerated `docs/` output.
 
-The `publish-wikijs-content.yml` workflow force-publishes `wiki-content/` to the `wikijs-content` branch for Wiki.js Git sync/import.
+## Local build
 
-Because `wikijs-content` is generated output, direct in-app Wiki.js edits should only be used if you also copy those edits back into the source markdown on `main`.
+Install the documentation dependencies:
 
-## Deployment model
+```powershell
+pip install -r requirements.txt
+```
 
-The deployment workflow assumes:
+Then build or preview the site:
 
-- a Linux VPS or server with Docker Engine and Docker Compose Plugin installed
-- SSH access from GitHub Actions
-- a reverse-proxied or directly exposed HTTP endpoint for the Wiki.js stack
-- Git storage in Wiki.js pointed at this repository's `wikijs-content` branch
+```powershell
+python scripts/build_mkdocs_docs.py
+mkdocs serve
+```
 
-The Docker stack includes:
+Or for a production build:
 
-- `postgres:15-alpine`
-- `ghcr.io/requarks/wiki:2`
-- `nginx:alpine` as a branded reverse proxy with CSS / JS injection
+```powershell
+python scripts/build_mkdocs_docs.py
+mkdocs build
+```
 
-## Required GitHub Secrets
+## GitHub Pages
 
-For `.github/workflows/deploy-wikijs.yml`:
+The repository uses a custom GitHub Actions workflow based on the official GitHub Pages actions:
 
-- `DEPLOY_HOST`
-- `DEPLOY_PORT`
-- `DEPLOY_USER`
-- `DEPLOY_SSH_KEY`
-- `DEPLOY_PATH`
-- `POSTGRES_PASSWORD`
-- `WIKI_CONTENT_SSH_PRIVATE_KEY`
+- `actions/configure-pages`
+- `actions/upload-pages-artifact`
+- `actions/deploy-pages`
 
-Optional:
+No external server, SSH access, or runtime secrets are required.
 
-- `POSTGRES_DB`
-- `POSTGRES_USER`
-- `HTTP_PORT`
+## Theme direction
 
-## Theme
+The site uses a Cybernetic-Forge look:
 
-The Cybernetic-Forge theme is applied by the Nginx layer in `deploy/nginx/nginx.conf`, which injects:
+- dark steel / obsidian backgrounds
+- electric cyan and blue accents
+- elevated glass-style surfaces
+- built-in light mode for accessibility and daytime reading
 
-- `/theme/cybernetic-forge.css`
-- `/theme/cybernetic-forge.js`
+## Important note
 
-This keeps branding under version control instead of relying on manual admin-only CSS overrides.
+Wiki.js is not compatible with plain GitHub Pages hosting, because Wiki.js requires a running application server and database. This repo now uses the closest static alternative that still feels modern and wiki-like on GitHub Pages.
 
-## First-time Wiki.js setup
-
-After the first deployment:
-
-1. Open the site and complete the Wiki.js setup wizard.
-2. Follow [ops/WIKIJS_SETUP.md](ops/WIKIJS_SETUP.md).
-3. Configure Git storage to sync against the `wikijs-content` branch.
-4. Run **Import Everything** once from the Git storage screen.

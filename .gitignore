@@ -1,6 +1,3 @@
-.env
-.env.local
-.env.production
-data/
-dist/
-wiki-content/
+.venv/
+__pycache__/
+site/

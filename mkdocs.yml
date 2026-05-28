@@ -1,0 +1,82 @@
+site_name: Cybernetic-Forge Plugin Documentation
+site_description: Official plugin documentation for Cybernetic-Forge
+repo_url: https://github.com/Cybernetic-Forge/Plugin-Documentation
+repo_name: Cybernetic-Forge/Plugin-Documentation
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+
+theme:
+  name: material
+  language: en
+  font:
+    text: Rajdhani
+    code: JetBrains Mono
+  icon:
+    logo: material/anvil
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: light blue
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+
+nav:
+  - Home: index.md
+  - Plugins:
+      - Overview: plugins/index.md
+      - AbyssalDao:
+          - Overview: plugins/abyssaldao/index.md
+          - Commands: plugins/abyssaldao/commands.md
+          - Configuration: plugins/abyssaldao/configuration.md
+          - API Information: plugins/abyssaldao/api_information.md
+      - MapArtPatent:
+          - Overview: plugins/mapartpatent/index.md
+          - Commands: plugins/mapartpatent/commands.md
+          - Configuration: plugins/mapartpatent/configuration.md
+          - API Information: plugins/mapartpatent/api_information.md
+      - McMMOParties:
+          - Overview: plugins/mcmmoparties/index.md
+          - Commands: plugins/mcmmoparties/commands.md
+          - Configuration: plugins/mcmmoparties/configuration.md
+          - API Information: plugins/mcmmoparties/api_information.md
+

@@ -1,2 +1,6 @@
-.sass-cache/
-.jekyll-cache/
+.env
+.env.local
+.env.production
+data/
+dist/
+wiki-content/

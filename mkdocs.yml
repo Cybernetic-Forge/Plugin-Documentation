@@ -1,7 +1,7 @@
 site_name: Cybernetic-Forge Plugin Documentation
 site_description: Official plugin documentation for Cybernetic-Forge
-repo_url: https://github.com/Cybernetic-Forge/Plugin-Documentation
-repo_name: Cybernetic-Forge/Plugin-Documentation
+repo_url: https://discord.gg/5yMjTCDqvZ
+repo_name: Join Cybernetic-Forge Discord
 docs_dir: docs
 site_dir: site
 use_directory_urls: true
@@ -14,7 +14,7 @@ theme:
     code: JetBrains Mono
   icon:
     logo: material/anvil
-    repo: fontawesome/brands/github
+    repo: fontawesome/brands/discord
   features:
     - navigation.tabs
     - navigation.sections
@@ -25,7 +25,6 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
-    - content.action.edit
   palette:
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
@@ -79,4 +78,3 @@ nav:
           - Commands: plugins/mcmmoparties/commands.md
           - Configuration: plugins/mcmmoparties/configuration.md
           - API Information: plugins/mcmmoparties/api_information.md
-

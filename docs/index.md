@@ -40,7 +40,7 @@
 
 ## About This Site
 
-This site is generated from markdown and deployed to GitHub Pages. It is designed to stay simple to maintain while still feeling premium, fast, and easy to navigate.
+This site is generated from markdown and designed to stay simple to maintain while still feeling premium, fast, and easy to navigate.
 
 ## Editing Workflow
 

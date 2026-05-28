@@ -58,15 +58,13 @@ jobs:
           set -euo pipefail
           ssh -p "${{ secrets.DEPLOY_PORT }}" "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" "
             mkdir -p '${{ secrets.DEPLOY_PATH }}/data/wiki/ssh' '${{ secrets.DEPLOY_PATH }}/data/postgres'
-            cat > '${{ secrets.DEPLOY_PATH }}/.env' <<'EOF'
-POSTGRES_DB=${POSTGRES_DB}
-POSTGRES_USER=${POSTGRES_USER}
-POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-HTTP_PORT=${HTTP_PORT}
-EOF
-            cat > '${{ secrets.DEPLOY_PATH }}/data/wiki/ssh/wikijs-content' <<'EOF'
-${{ secrets.WIKI_CONTENT_SSH_PRIVATE_KEY }}
-EOF
+            printf '%s\n' \
+              'POSTGRES_DB=${POSTGRES_DB}' \
+              'POSTGRES_USER=${POSTGRES_USER}' \
+              'POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}' \
+              'HTTP_PORT=${HTTP_PORT}' \
+              > '${{ secrets.DEPLOY_PATH }}/.env'
+            printf '%s\n' '${{ secrets.WIKI_CONTENT_SSH_PRIVATE_KEY }}' > '${{ secrets.DEPLOY_PATH }}/data/wiki/ssh/wikijs-content'
             chmod 600 '${{ secrets.DEPLOY_PATH }}/data/wiki/ssh/wikijs-content'
             cd '${{ secrets.DEPLOY_PATH }}'
             docker compose pull

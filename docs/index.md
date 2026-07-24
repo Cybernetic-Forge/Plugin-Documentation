@@ -2,10 +2,9 @@
 
 <div class="hero-panel">
   <div class="hero-panel__badge">Cybernetic-Forge</div>
-  <h1>Forge distinctive Minecraft plugin systems.</h1>
+  <h1>Forge unique Minecraft plugin systems.</h1>
   <p>
-    A modern documentation hub for custom gameplay mechanics, progression systems,
-    admin tooling, and plugin integrations built by Cybernetic-Forge.
+    Explore the documentation hub for our plugins—your go-to resource for discovering powerful features, understanding key functionalities, and getting the most out of every plugin.
   </p>
 </div>
 
@@ -38,13 +37,11 @@
 | [Configuration](plugins/mcmmoparties/configuration.md) | Config, tuning, and file structure for McMMOParties |
 | [API Information](plugins/mcmmoparties/api_information.md) | Integration and runtime notes for McMMOParties |
 
-## About This Site
+### [Taleweaver](plugins/taleweaver/index.md)
 
-This site is generated from markdown and designed to stay simple to maintain while still feeling premium, fast, and easy to navigate.
-
-## Editing Workflow
-
-```powershell
-python scripts/build_mkdocs_docs.py
-mkdocs serve
-```
+| Section | Description |
+| --- | --- |
+| [Overview](plugins/taleweaver/index.md) | Start here for the Taleweaver overview |
+| [Commands](plugins/taleweaver/commands.md) | Command reference for Taleweaver |
+| [Configuration](plugins/taleweaver/configuration.md) | Config, tuning, and file structure for Taleweaver |
+| [API Information](plugins/taleweaver/api_information.md) | Integration and runtime notes for Taleweaver |

@@ -22,3 +22,10 @@ Browse the Cybernetic-Forge plugin catalog below.
 - [Commands](mcmmoparties/commands.md)
 - [Configuration](mcmmoparties/configuration.md)
 - [API Information](mcmmoparties/api_information.md)
+
+## [Taleweaver](taleweaver/index.md)
+
+- [Overview](taleweaver/index.md)
+- [Commands](taleweaver/commands.md)
+- [Configuration](taleweaver/configuration.md)
+- [API Information](taleweaver/api_information.md)

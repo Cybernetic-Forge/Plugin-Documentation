@@ -202,6 +202,8 @@
 }
 
 .md-main {
+  position: relative;
+  isolation: isolate;
   background-color: #070d10;
   background-image:
     linear-gradient(rgba(97, 211, 255, 0.045) 1px, transparent 1px),
@@ -209,6 +211,74 @@
     radial-gradient(circle at 78% 0%, rgba(0, 200, 255, 0.1), transparent 26%),
     radial-gradient(circle at 8% 18%, rgba(240, 179, 91, 0.07), transparent 22%);
   background-size: 46px 46px, 46px 46px, auto, auto;
+}
+
+.md-main__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.cf-arcane-background {
+  --cf-arcane-x: 0px;
+  --cf-arcane-y: 0px;
+  --cf-arcane-tilt: 0deg;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: min(112vmin, 1180px);
+  aspect-ratio: 1;
+  color: #70dff4;
+  opacity: 0.062;
+  pointer-events: none;
+  transform:
+    translate3d(
+      calc(-50% + var(--cf-arcane-x)),
+      calc(-50% + var(--cf-arcane-y)),
+      0
+    )
+    rotate(var(--cf-arcane-tilt))
+    scale(1.025);
+  transform-origin: center;
+  will-change: transform;
+}
+
+[data-md-color-scheme="default"] .cf-arcane-background {
+  color: #0d6281;
+  opacity: 0.044;
+  mix-blend-mode: multiply;
+}
+
+.cf-arcane-background svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 10px currentColor);
+}
+
+.cf-arcane-background path,
+.cf-arcane-background circle,
+.cf-arcane-background ellipse,
+.cf-arcane-background line,
+.cf-arcane-background polygon,
+.cf-arcane-background polyline {
+  vector-effect: non-scaling-stroke;
+}
+
+.cf-arcane__orbit--outer {
+  transform-origin: center;
+  animation: cf-arcane-turn 180s linear infinite;
+}
+
+.cf-arcane__orbit--inner {
+  transform-origin: center;
+  animation: cf-arcane-turn-reverse 132s linear infinite;
+}
+
+.cf-arcane__pulse {
+  transform-origin: center;
+  animation: cf-arcane-breathe 12s ease-in-out infinite;
 }
 
 .md-content__inner {
@@ -702,6 +772,19 @@ body:has(.hero-panel--home) .md-typeset > h2 {
   100% {
     background-position: 180px 0, -240px 0, 0 0, 0 0;
   }
+}
+
+@keyframes cf-arcane-turn {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cf-arcane-turn-reverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes cf-arcane-breathe {
+  0%, 100% { opacity: 0.62; transform: scale(0.995); }
+  50% { opacity: 1; transform: scale(1.008); }
 }
 
 @keyframes cf-hero-grid {

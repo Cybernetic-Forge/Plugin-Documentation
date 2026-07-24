@@ -50,5 +50,4 @@ Choose a plugin to open its operating guide, configuration, and API reference.
     <a href="taleweaver/api_information/">API</a>
   </div>
 </article>
-
 </div>

@@ -17,7 +17,8 @@
   </div>
 </div>
 
-## Available Plugins
+## Choose a system
+
+Work from the plugin you are changing. Each dossier is organized around real server tasks, from first deployment to advanced configuration and API integration.
 
 {{PLUGIN_CATALOG}}
-

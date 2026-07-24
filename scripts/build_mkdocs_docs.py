@@ -106,6 +106,7 @@ def build_home(plugin_dirs: list[Path]) -> str:
     return template.replace("{{PLUGIN_CATALOG}}", catalog)
 
 
+
 def build_plugins_index(plugin_dirs: list[Path]) -> str:
     lines = [
         "# Plugins",
@@ -909,4 +910,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -1,4 +1,19 @@
-# Taleweaver
+<div class="hero-panel hero-panel--plugin">
+  <div class="hero-panel__kicker">Paper / lore graph / runtime manual</div>
+  <div class="hero-panel__badge">Taleweaver 1.2.0</div>
+  <h1>Taleweaver</h1>
+  <p>Build a persistent, discoverable lore layer across items, entities, locations, quests, skills, recipes, NPCs, and the rest of your server.</p>
+  <div class="hero-panel__actions">
+    <a class="hero-panel__action" href="commands/">Open command guide →</a>
+    <span class="hero-panel__meta">Paper 26.1.x · MariaDB · optional AI</span>
+  </div>
+  <div class="hero-panel__stats">
+    <div class="hero-panel__stat"><strong>01</strong><span>Lore graph</span></div>
+    <div class="hero-panel__stat"><strong>02</strong><span>Player journal</span></div>
+    <div class="hero-panel__stat"><strong>03</strong><span>Revision history</span></div>
+    <div class="hero-panel__stat"><strong>API</strong><span>Hook surface</span></div>
+  </div>
+</div>
 
 Taleweaver is a Paper plugin for turning a server's items, entities, locations, quests, skills, recipes, and other gameplay objects into a persistent, discoverable lore graph.
 

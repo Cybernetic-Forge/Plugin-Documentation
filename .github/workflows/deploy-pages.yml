@@ -39,6 +39,9 @@ jobs:
       - name: Build site
         run: mkdocs build --strict
 
+      - name: Validate internal links
+        run: python scripts/validate_site_links.py site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:

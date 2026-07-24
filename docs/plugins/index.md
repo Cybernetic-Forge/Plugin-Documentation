@@ -1,31 +1,54 @@
 # Plugins
 
-Browse the Cybernetic-Forge plugin catalog below.
+Choose a plugin to open its operating guide, configuration, and API reference.
 
-## [AbyssalDao](abyssaldao/index.md)
+<div class="plugin-grid">
+<article class="plugin-card">
+  <div class="plugin-card__eyebrow">Plugin dossier</div>
+  <h3><a href="abyssaldao/">AbyssalDao</a></h3>
+  <p>Overview, operations, configuration, and integration notes for AbyssalDao.</p>
+  <div class="plugin-card__links">
+    <a href="abyssaldao/">Overview</a>
+    <a href="abyssaldao/commands/">Commands</a>
+    <a href="abyssaldao/configuration/">Configuration</a>
+    <a href="abyssaldao/api_information/">API</a>
+  </div>
+</article>
 
-- [Overview](abyssaldao/index.md)
-- [Commands](abyssaldao/commands.md)
-- [Configuration](abyssaldao/configuration.md)
-- [API Information](abyssaldao/api_information.md)
+<article class="plugin-card">
+  <div class="plugin-card__eyebrow">Plugin dossier</div>
+  <h3><a href="mapartpatent/">MapArtPatent</a></h3>
+  <p>Overview, operations, configuration, and integration notes for MapArtPatent.</p>
+  <div class="plugin-card__links">
+    <a href="mapartpatent/">Overview</a>
+    <a href="mapartpatent/commands/">Commands</a>
+    <a href="mapartpatent/configuration/">Configuration</a>
+    <a href="mapartpatent/api_information/">API</a>
+  </div>
+</article>
 
-## [MapArtPatent](mapartpatent/index.md)
+<article class="plugin-card">
+  <div class="plugin-card__eyebrow">Plugin dossier</div>
+  <h3><a href="mcmmoparties/">McMMOParties</a></h3>
+  <p>Overview, operations, configuration, and integration notes for McMMOParties.</p>
+  <div class="plugin-card__links">
+    <a href="mcmmoparties/">Overview</a>
+    <a href="mcmmoparties/commands/">Commands</a>
+    <a href="mcmmoparties/configuration/">Configuration</a>
+    <a href="mcmmoparties/api_information/">API</a>
+  </div>
+</article>
 
-- [Overview](mapartpatent/index.md)
-- [Commands](mapartpatent/commands.md)
-- [Configuration](mapartpatent/configuration.md)
-- [API Information](mapartpatent/api_information.md)
+<article class="plugin-card">
+  <div class="plugin-card__eyebrow">Plugin dossier</div>
+  <h3><a href="taleweaver/">Taleweaver</a></h3>
+  <p>Overview, operations, configuration, and integration notes for Taleweaver.</p>
+  <div class="plugin-card__links">
+    <a href="taleweaver/">Overview</a>
+    <a href="taleweaver/commands/">Commands</a>
+    <a href="taleweaver/configuration/">Configuration</a>
+    <a href="taleweaver/api_information/">API</a>
+  </div>
+</article>
 
-## [McMMOParties](mcmmoparties/index.md)
-
-- [Overview](mcmmoparties/index.md)
-- [Commands](mcmmoparties/commands.md)
-- [Configuration](mcmmoparties/configuration.md)
-- [API Information](mcmmoparties/api_information.md)
-
-## [Taleweaver](taleweaver/index.md)
-
-- [Overview](taleweaver/index.md)
-- [Commands](taleweaver/commands.md)
-- [Configuration](taleweaver/configuration.md)
-- [API Information](taleweaver/api_information.md)
+</div>

@@ -1,31 +1,30 @@
 <div class="hero-panel hero-panel--home">
-  <div class="hero-panel__kicker">Cybernetic-Forge / Documentation hub</div>
-  <div class="hero-panel__badge">Paper plugin systems</div>
-  <h1>Systems with a story.</h1>
+  <div class="hero-panel__kicker">Cybernetic-Forge</div>
+  <div class="hero-panel__badge">Minecraft plugin documentation</div>
+  <h1>Plugin documentation</h1>
   <p>
-    Explore the documentation hub for our plugins—your go-to resource for discovering powerful features, understanding key functionalities, and getting the most out of every plugin.
+    Installation, commands, configuration, and developer references for Cybernetic-Forge Minecraft plugins.
   </p>
   <div class="hero-panel__actions">
-    <a class="hero-panel__action" href="plugins/">Explore plugins →</a>
-    <span class="hero-panel__meta">Runtime guides · configuration · integrations</span>
+    <a class="hero-panel__action" href="plugins/">Browse plugins →</a>
+    <span class="hero-panel__meta">Setup · commands · configuration · API</span>
   </div>
   <div class="hero-panel__stats">
-    <div class="hero-panel__stat"><strong>04</strong><span>Plugin surfaces</span></div>
-    <div class="hero-panel__stat"><strong>24/7</strong><span>Server mindset</span></div>
-    <div class="hero-panel__stat"><strong>API</strong><span>Integration ready</span></div>
-    <div class="hero-panel__stat"><strong>∞</strong><span>Worlds to build</span></div>
+    <div class="hero-panel__stat"><strong>04</strong><span>Documented plugins</span></div>
+    <div class="hero-panel__stat"><strong>16</strong><span>Reference pages</span></div>
+    <div class="hero-panel__stat"><strong>Paper</strong><span>Server platform</span></div>
+    <div class="hero-panel__stat"><strong>API</strong><span>Developer guides</span></div>
   </div>
 </div>
 
-## Choose a system
+## Available plugins
 
-Work from the plugin you are changing. Each dossier is organized around real server tasks, from first deployment to advanced configuration and API integration.
+Select a plugin to view its setup instructions, commands, configuration options, and API information.
 
 <div class="plugin-grid">
 <article class="plugin-card">
-  <div class="plugin-card__eyebrow">Plugin dossier</div>
   <h3><a href="plugins/abyssaldao/">AbyssalDao</a></h3>
-  <p>Overview, operations, configuration, and integration notes for AbyssalDao.</p>
+  <p>Setup, commands, configuration, and API information for AbyssalDao.</p>
   <div class="plugin-card__links">
     <a href="plugins/abyssaldao/">Overview</a>
     <a href="plugins/abyssaldao/commands/">Commands</a>
@@ -35,9 +34,8 @@ Work from the plugin you are changing. Each dossier is organized around real ser
 </article>
 
 <article class="plugin-card">
-  <div class="plugin-card__eyebrow">Plugin dossier</div>
   <h3><a href="plugins/mapartpatent/">MapArtPatent</a></h3>
-  <p>Overview, operations, configuration, and integration notes for MapArtPatent.</p>
+  <p>Setup, commands, configuration, and API information for MapArtPatent.</p>
   <div class="plugin-card__links">
     <a href="plugins/mapartpatent/">Overview</a>
     <a href="plugins/mapartpatent/commands/">Commands</a>
@@ -47,9 +45,8 @@ Work from the plugin you are changing. Each dossier is organized around real ser
 </article>
 
 <article class="plugin-card">
-  <div class="plugin-card__eyebrow">Plugin dossier</div>
   <h3><a href="plugins/mcmmoparties/">McMMOParties</a></h3>
-  <p>Overview, operations, configuration, and integration notes for McMMOParties.</p>
+  <p>Setup, commands, configuration, and API information for McMMOParties.</p>
   <div class="plugin-card__links">
     <a href="plugins/mcmmoparties/">Overview</a>
     <a href="plugins/mcmmoparties/commands/">Commands</a>
@@ -59,9 +56,8 @@ Work from the plugin you are changing. Each dossier is organized around real ser
 </article>
 
 <article class="plugin-card">
-  <div class="plugin-card__eyebrow">Plugin dossier</div>
   <h3><a href="plugins/taleweaver/">Taleweaver</a></h3>
-  <p>Overview, operations, configuration, and integration notes for Taleweaver.</p>
+  <p>Setup, commands, configuration, and API information for Taleweaver.</p>
   <div class="plugin-card__links">
     <a href="plugins/taleweaver/">Overview</a>
     <a href="plugins/taleweaver/commands/">Commands</a>

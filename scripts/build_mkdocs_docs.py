@@ -82,9 +82,8 @@ def build_plugin_card(slug: str, title: str, base_path: str) -> str:
     return "\n".join(
         [
             '<article class="plugin-card">',
-            '  <div class="plugin-card__eyebrow">Plugin dossier</div>',
             f'  <h3><a href="{root}">{title}</a></h3>',
-            f'  <p>Overview, operations, configuration, and integration notes for {title}.</p>',
+            f'  <p>Setup, commands, configuration, and API information for {title}.</p>',
             '  <div class="plugin-card__links">',
             f'    <a href="{root}">Overview</a>',
             f'    <a href="{root}commands/">Commands</a>',
@@ -283,44 +282,25 @@ EXTRA_CSS = r"""
 }
 
 .md-header {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
+  overflow: visible;
   background:
+    linear-gradient(115deg, transparent 0 47%, rgba(97, 211, 255, 0.12) 48%, transparent 49%),
+    linear-gradient(25deg, transparent 0 47%, rgba(240, 179, 91, 0.09) 48%, transparent 49%),
     linear-gradient(90deg, rgba(4, 11, 14, 0.96), rgba(10, 31, 37, 0.88), rgba(4, 11, 14, 0.96)),
     linear-gradient(135deg, rgba(0, 200, 255, 0.18), rgba(240, 179, 91, 0.08));
+  background-size: 180px 110px, 240px 140px, auto, auto;
   border-top: 2px solid var(--cf-accent-warm);
   border-bottom: 1px solid var(--cf-line-strong);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+  animation: cf-header-background 22s linear infinite;
 }
 
 .md-header::before {
-  content: "";
-  position: absolute;
-  inset: -120% -20%;
-  z-index: -2;
-  opacity: 0.52;
-  background-image:
-    linear-gradient(115deg, transparent 0 47%, rgba(97, 211, 255, 0.16) 48%, transparent 49%),
-    linear-gradient(25deg, transparent 0 47%, rgba(240, 179, 91, 0.12) 48%, transparent 49%);
-  background-size: 180px 110px, 240px 140px;
-  transform: rotate(-4deg);
-  animation: cf-header-drift 22s linear infinite;
-  pointer-events: none;
+  content: none;
 }
 
 .md-header::after {
-  content: "";
-  position: absolute;
-  top: -95px;
-  right: 12%;
-  width: 220px;
-  height: 220px;
-  border: 1px solid rgba(97, 211, 255, 0.24);
-  box-shadow: 0 0 0 18px rgba(97, 211, 255, 0.035), 0 0 48px rgba(0, 200, 255, 0.18);
-  transform: rotate(45deg);
-  animation: cf-header-orbit 16s ease-in-out infinite;
-  pointer-events: none;
+  content: none;
 }
 
 .md-header__inner,
@@ -659,7 +639,8 @@ EXTRA_CSS = r"""
 }
 
 .md-header__inner {
-  min-height: 2.55rem;
+  height: 2.65rem;
+  min-height: 2.65rem;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -719,6 +700,24 @@ EXTRA_CSS = r"""
 
 .md-content__inner {
   max-width: none;
+}
+
+body:has(.hero-panel--home) .md-sidebar--primary,
+body:has(.hero-panel--home) .md-sidebar--secondary {
+  display: none;
+}
+
+body:has(.hero-panel--home) .md-content {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+body:has(.hero-panel--home) .md-content__inner {
+  margin: 0;
+}
+
+body:has(.hero-panel--home) .md-typeset > h2 {
+  margin-top: 1.6rem;
 }
 
 .md-typeset > p,
@@ -827,14 +826,13 @@ EXTRA_CSS = r"""
   background: #060c0f;
 }
 
-@keyframes cf-header-drift {
-  from { transform: translate3d(-3%, -4%, 0) rotate(-4deg); }
-  to { transform: translate3d(3%, 4%, 0) rotate(-4deg); }
-}
-
-@keyframes cf-header-orbit {
-  0%, 100% { transform: rotate(45deg) translate3d(0, 0, 0); opacity: 0.55; }
-  50% { transform: rotate(135deg) translate3d(12px, -8px, 0); opacity: 0.9; }
+@keyframes cf-header-background {
+  0% {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 180px 0, -240px 0, 0 0, 0 0;
+  }
 }
 
 @keyframes cf-hero-grid {

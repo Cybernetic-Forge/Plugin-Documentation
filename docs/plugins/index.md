@@ -4,9 +4,8 @@ Choose a plugin to open its operating guide, configuration, and API reference.
 
 <div class="plugin-grid">
 <article class="plugin-card">
-  <div class="plugin-card__eyebrow">Plugin dossier</div>
   <h3><a href="abyssaldao/">AbyssalDao</a></h3>
-  <p>Overview, operations, configuration, and integration notes for AbyssalDao.</p>
+  <p>Setup, commands, configuration, and API information for AbyssalDao.</p>
   <div class="plugin-card__links">
     <a href="abyssaldao/">Overview</a>
     <a href="abyssaldao/commands/">Commands</a>
@@ -16,9 +15,8 @@ Choose a plugin to open its operating guide, configuration, and API reference.
 </article>
 
 <article class="plugin-card">
-  <div class="plugin-card__eyebrow">Plugin dossier</div>
   <h3><a href="mapartpatent/">MapArtPatent</a></h3>
-  <p>Overview, operations, configuration, and integration notes for MapArtPatent.</p>
+  <p>Setup, commands, configuration, and API information for MapArtPatent.</p>
   <div class="plugin-card__links">
     <a href="mapartpatent/">Overview</a>
     <a href="mapartpatent/commands/">Commands</a>
@@ -28,9 +26,8 @@ Choose a plugin to open its operating guide, configuration, and API reference.
 </article>
 
 <article class="plugin-card">
-  <div class="plugin-card__eyebrow">Plugin dossier</div>
   <h3><a href="mcmmoparties/">McMMOParties</a></h3>
-  <p>Overview, operations, configuration, and integration notes for McMMOParties.</p>
+  <p>Setup, commands, configuration, and API information for McMMOParties.</p>
   <div class="plugin-card__links">
     <a href="mcmmoparties/">Overview</a>
     <a href="mcmmoparties/commands/">Commands</a>
@@ -40,9 +37,8 @@ Choose a plugin to open its operating guide, configuration, and API reference.
 </article>
 
 <article class="plugin-card">
-  <div class="plugin-card__eyebrow">Plugin dossier</div>
   <h3><a href="taleweaver/">Taleweaver</a></h3>
-  <p>Overview, operations, configuration, and integration notes for Taleweaver.</p>
+  <p>Setup, commands, configuration, and API information for Taleweaver.</p>
   <div class="plugin-card__links">
     <a href="taleweaver/">Overview</a>
     <a href="taleweaver/commands/">Commands</a>
@@ -50,4 +46,5 @@ Choose a plugin to open its operating guide, configuration, and API reference.
     <a href="taleweaver/api_information/">API</a>
   </div>
 </article>
+
 </div>

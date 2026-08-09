@@ -45,7 +45,8 @@ Main capabilities:
 - `getParty(String partyID)`: lookup by party id
 - `getParties()`: get all loaded parties
 - `getPartyNames()`: get all loaded party ids
-- `getPartyOfPlayer(UUID uuid)`: find the party a player belongs to
+- `getPartyOfPlayer(UUID uuid)`: return the player's persisted active party, or persist and return the first remaining membership by party ID as a fallback
+- `getPartiesOfPlayer(UUID uuid)`: return all parties the player currently belongs to
 - `update(McMMOParty party)`: save and reload one party
 - `scheduleSave(McMMOParty party)`: delayed async save
 - `reload()`: async full reload from storage
@@ -63,7 +64,8 @@ Important note:
 Lookup helpers:
 
 - `getParty(String partyId)`
-- `getPartyOfPlayer(UUID playerId)`
+- `getPartyOfPlayer(UUID playerId)`: returns the active/fallback party used by commands that omit a party argument
+- `getPartiesOfPlayer(UUID playerId)`: returns every simultaneous party membership
 - `getPartyNames()`
 - `getOnlinePlayerNames()`
 - `getPartyLoader()`

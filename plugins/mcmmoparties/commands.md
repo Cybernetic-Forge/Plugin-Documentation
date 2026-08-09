@@ -16,22 +16,24 @@ Primary command aliases:
 
 | Command | Description | Permission |
 | --- | --- | --- |
-| `/party accept <player>` | Accepts a pending join request from a player into your party. | None |
-| `/party chat <message...>` | Sends a message to party chat. | None |
+| `/party` | Opens the party hub for browsing parties, creating a party, viewing memberships, and managing join requests. | None |
+| `/party accept <player> [party]` | Accepts a pending join request into the specified party, or your active party when omitted. | None |
+| `/party chat <message...>` | Sends a message to your active party chat. | None |
+| `/party chat <party> <message...>` | Sends a message to the specified party chat. | None |
 | `/party create <name>` | Opens the party creation flow for a new party name. | None |
-| `/party disband` | Disbands your party if you are allowed to disband it. | None |
+| `/party disband [party]` | Disbands the specified party, or your active party when omitted. | None |
 | `/party info` | Opens the overview for your current party. | None |
 | `/party info <party>` | Opens the overview for the specified party. | None |
-| `/party invite <player>` | Invites an online player to your party. | None |
+| `/party invite <player> [party]` | Invites an online player to the specified party, or your active party when omitted. | None |
 | `/party join <party>` | Joins a public party, or an invited private party. | None |
 | `/party join <party> <password>` | Joins a password-protected party using its password. | None |
-| `/party kick <player>` | Kicks a member from your party. | None |
-| `/party leave` | Leaves your current party. Party owners cannot use this to leave their own party. | None |
+| `/party kick <player> [party]` | Kicks a member from the specified party, or your active party when omitted. | None |
+| `/party leave [party]` | Leaves the specified party, or your active party when omitted. Party owners cannot leave their own party. | None |
 | `/party list` | Opens the party list GUI. | None |
 | `/party list <page>` | Opens the party list GUI on the given page. | None |
 | `/party list <page> <sort>` | Opens the party list GUI using the given page and sort mode. | None |
 | `/party list <sort>` | Opens the party list GUI using the given sort mode. | None |
-| `/party newleader <player>` | Transfers party leadership to another party member. | None |
+| `/party newleader <player> [party]` | Transfers leadership of the specified party, or your active party when omitted. | None |
 
 ## Admin Commands
 
@@ -54,6 +56,15 @@ Primary command aliases:
 
 ## Notes
 
+- The `/party` hub shows the public browser on the left, party creation and memberships in the center, and invitations and join requests on the right.
+- The hub displays the player's active party and incoming/outgoing request counters. The request button glows when an incoming request needs attention.
+- In the public party browser, left-click opens the selected party overview and right-click sends a join request.
+- On the center hub button, left-click starts party creation and right-click opens **My Parties**. In **My Parties**, left-click views a party, owner-only right-click edits it, and shift-left-click makes it active.
+- Back navigation returns to the originating **My Parties** page or to the same public-list page and sorting mode. Cancelling party editing returns without saving.
+- The invitation GUI shows incoming requests for parties the player manages and outgoing requests the player has sent. Incoming entries use the requester's player head, and expiry countdowns refresh while the GUI remains open.
+- Commands without an explicit party argument operate on the persisted active party. If that party becomes unavailable, the plugin persists the first remaining membership by party ID as the fallback and notifies the player.
+- A player can belong to multiple parties up to `Party.MaxPartiesPerPlayer`; earned party experience and party buffs are processed separately for every membership.
+- New party IDs are lowercase and command-safe. Whitespace becomes `_`, unsupported characters are removed, and the resulting ID may contain only `a-z`, `0-9`, `_`, and `-`. The separate display name remains unrestricted.
 - Most player-facing `/party` subcommands do not have dedicated permission checks in code.
 - `/party reload` is handled through the user command root, but it is an admin-only command.
 - Admin subcommands accept either the specific child permission listed above or the umbrella permission `mcmmoparties.admin`.

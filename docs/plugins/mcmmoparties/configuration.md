@@ -38,8 +38,12 @@ DungeonInstance:
 
 Party:
   BaseMemberSlots: 10
+  MaxPartiesPerPlayer: 3
   PartyLevelCap: 100
   DefaultTresorSize: 50000
+
+Invitations:
+  ExpirationHours: 24
 
 Buffs:
   Handler: SKILLPOINTS
@@ -91,8 +95,10 @@ Experience:
 | `Hooks.ChestShop.Enabled` | boolean | `true` | Enables or disables the ChestShop integration layer. |
 | `DungeonInstance.DefaultSlots` | integer | `2` | Base number of dungeon instance slots before party buff bonuses are added. |
 | `Party.BaseMemberSlots` | integer | `10` | Base party member capacity before `MEMBER_SLOTS` buff bonuses are added. |
+| `Party.MaxPartiesPerPlayer` | integer | `3` | Maximum number of parties one player may join simultaneously. Set to `-1` for unlimited memberships. Party experience and buffs are evaluated separately for each membership. |
 | `Party.PartyLevelCap` | integer | `100` | Maximum party level. Set to `-1` for no level cap. |
 | `Party.DefaultTresorSize` | integer | `50000` | Base party treasury limit before `TRESOR_SIZE` buff bonuses are added. Set to `-1` for unlimited base treasury size. |
+| `Invitations.ExpirationHours` | integer | `24` | Lifetime of party invitations and join requests. Remaining time and exact expiry are shown in the invitation GUI, whose countdown refreshes every 30 seconds while open. |
 | `Buffs.Handler` | string | `SKILLPOINTS` | Buff mode. Valid values are `LEVEL` and `SKILLPOINTS`. |
 | `Buffs.SkillPointsPerLevel` | integer | `1` | Number of party skill points granted per party level in `SKILLPOINTS` mode. |
 | `Experience.LevelCurve` | string | `"(x * (20 + (2.5 * x))) * 25"` | Expression used to calculate required exp for level `x`. |
@@ -127,6 +133,8 @@ You usually do not need separate documentation pages for these two files if you 
 - The `translation` key in `config.yml` picks the locale folder. If a requested file is missing for that locale, the plugin falls back to `translations/en/`.
 - `lang.yml` is the right place to change wording, colors, and message formatting.
 - `guis.yml` is the right place to change inventory layout, icons, titles, lore, and navigation buttons.
+- The `PartyHub`, `MyParties`, `PartyInvitations`, and `PartyList` sections control the new multi-party workflow. Keep entry and navigation slots unique within each inventory.
+- Hub lore supports active-party and request-count placeholders such as `%active_party_id%`, `%active_party_display%`, `%incoming_count%`, `%outgoing_count%`, and `%invitation_count%`.
 
 ## Buffs (`features/buffs.yml`)
 

@@ -81,6 +81,7 @@ nav:
           - Commands: plugins/mcmmoparties/commands.md
           - Configuration: plugins/mcmmoparties/configuration.md
           - API Information: plugins/mcmmoparties/api_information.md
+          - PlaceholderAPI: plugins/mcmmoparties/placeholderapi.md
       - Taleweaver:
           - Overview: plugins/taleweaver/index.md
           - Commands: plugins/taleweaver/commands.md

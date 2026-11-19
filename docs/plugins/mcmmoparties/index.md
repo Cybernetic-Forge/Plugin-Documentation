@@ -9,3 +9,4 @@ Use the sections below to find what you need quickly:
 | [Commands](./commands/) | List of available plugin commands and usage (including permissions) |
 | [Configuration](./configuration/) | Main config structure and example values |
 | [API Information](./api_information/) | Learn how to hook into McMMOParties into your own plugins |
+| [PlaceholderAPI](./placeholderapi/) | Party placeholders for TAB, scoreboards, and other plugins |

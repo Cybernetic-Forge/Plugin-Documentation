@@ -17,10 +17,16 @@ net.maksy.taleweaver.taleweaver.api.events
 net.maksy.taleweaver.taleweaver.core.models
 net.maksy.taleweaver.taleweaver.core.models.ontologies
 net.maksy.taleweaver.taleweaver.hooks
-net.maksy.taleweaver.taleweaver.ai
+net.maksy.taleweaver.taleweaver.config.ai
+net.maksy.taleweaver.taleweaver.modules.ai
+net.maksy.taleweaver.taleweaver.modules.journal
+net.maksy.taleweaver.taleweaver.modules.revisions
+net.maksy.taleweaver.taleweaver.modules.suggestions
 ```
 
 Add `Taleweaver` as a soft dependency in the integrating plugin and guard calls with a runtime enabled check. Do not load Taleweaver-only classes during plugin construction if Taleweaver is optional.
+
+Use the Taleweaver JAR as a compile-time dependency and let Paper load the installed plugin at runtime. Since the package refactor, types moved out of the old `ai`, `journal`, `revisions`, and `suggestions` packages. Update imports and recompile integrations that reference those types. The public manager entry point class names remain available.
 
 ## Core access points
 
@@ -118,6 +124,8 @@ The builder requires `referenceType` and either `identifierPrefix(...)` or `iden
 
 Register after both plugins are enabled. The custom type then participates in `/lore create`, reference resolution, icons, and resource-pack regeneration.
 
+On the Create & Edit preview branch, the wizard groups builder hooks by the plugin passed to `plugin(...)` and then by type. Supply `availableReferenceValues(...)` for browsing. A builder can also provide editable defaults via `creationDefaults((identifier, value) -> new IHookedReference.CreationDefaults(title, description))`.
+
 ## Low-level hooks
 
 Implement `IHookedReference` when identifier detection depends on runtime Bukkit objects or custom auto-create behavior:
@@ -138,10 +146,13 @@ public final class FactionHook implements IHookedReference {
     }
 }
 
-LoreManager.registerReferenceHandler(new FactionHook());
+FactionHook hook = new FactionHook();
+LoreManager.registerReferenceHandler(hook);
 ```
 
 The interface can resolve strings, `ItemStack`, `Entity`, and `Location` values, expose available values, and provide icon items/materials. Register through the specific `registerItemHandler`, `registerEntityHandler`, `registerLocationHandler`, or `registerReferenceHandler` method when the intent is clear.
+
+Supply `getAvailableReferenceValues()` for a low-level hook that exposes a catalogue. On the preview branch, low-level hooks can override `getCreationSource()`, `resolveCreationIdentifier(String)`, `getCreationDefaults(String, String)`, and `isAvailableForCreation()`. Keep your registered handler instance and unregister it with `LoreManager.unregisterHandler(hook)` when your integration is disabled.
 
 For integrations that know cross-object relationships, implement `IAutoCreateRelationsHook` and provide `autoCreateRelations(HookType... hooks)`. Use `HookAutoCreateUtil` helpers to create item, entity, location, reference, skill, and relation operations consistently.
 

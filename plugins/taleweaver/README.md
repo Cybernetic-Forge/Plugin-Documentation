@@ -5,132 +5,63 @@ has_children: true
 has_toc: true
 ---
 
-<div class="hero-panel hero-panel--plugin">
-  <div class="hero-panel__kicker">Paper / lore graph / runtime manual</div>
-  <div class="hero-panel__badge">Taleweaver 1.2.0</div>
-  <h1>Taleweaver</h1>
-  <p>Build a persistent, discoverable lore layer across items, entities, locations, quests, skills, recipes, NPCs, and the rest of your server.</p>
-  <div class="hero-panel__actions">
-    <a class="hero-panel__action" href="commands/">Open command guide →</a>
-    <span class="hero-panel__meta">Paper 26.1.x · MariaDB · optional AI</span>
-  </div>
-  <div class="hero-panel__stats">
-    <div class="hero-panel__stat"><strong>01</strong><span>Lore graph</span></div>
-    <div class="hero-panel__stat"><strong>02</strong><span>Player journal</span></div>
-    <div class="hero-panel__stat"><strong>03</strong><span>Revision history</span></div>
-    <div class="hero-panel__stat"><strong>API</strong><span>Hook surface</span></div>
-  </div>
-</div>
+# Taleweaver
 
-Taleweaver is a Paper plugin for turning a server's items, entities, locations, quests, skills, recipes, and other gameplay objects into a persistent, discoverable lore graph.
+Taleweaver lets you link Minecraft items, creatures, locations, and plugin content into a shared story. Players discover entries during play and revisit them in a personal journal.
 
-It combines:
-
-- a MariaDB-backed lore catalogue;
-- an in-game lore browser and editor;
-- player journals with discovery, unread, favourite, search, and private-note state;
-- player suggestions with administrator review and stale-change protection;
-- parent/child inheritance and directional relations;
-- revision history with comparison and restore;
-- optional integrations for common content, item, quest, skill, NPC, and protection plugins;
-- optional AI-assisted drafting, consistency checks, and lore-aware NPC conversations;
-- optional generated resource-pack icons and custom model data.
-
-## Compatibility and requirements
-
-| Requirement | Supported value |
+| Section | Description |
 | --- | --- |
-| Server | Paper API `26.1.x` (the plugin descriptor targets `26.1.1`) |
-| Database | MariaDB, reachable by JDBC |
-| Java | Use the Java runtime required by the installed Paper release |
-| Plugin version covered here | `1.2.0` |
+| [Commands](commands.md) | Player and admin commands, permissions, and publishing |
+| [Configuration](configuration.md) | MariaDB, journal settings, revisions, resource packs, and provider settings |
+| [API Information](api_information.md) | Lore models, events, custom references, and extension lifecycle |
+| [AI & NPCs](ai_and_npcs.md) | Lore drafting, consistency checks, NPC knowledge, and actions |
+| [Create & Edit Preview](wizard_preview.md) | Guided inventory creation and management, free-form identifiers, and bStats in development |
 
-Taleweaver starts its database schema automatically. Create the database and grant the configured user access before first startup; the tables are created by the plugin when it connects.
+## Requirements
 
-## Installation
-
-1. Install Paper and a working MariaDB server.
-2. Copy `Taleweaver.jar` into the server's `plugins` directory.
-3. Start the server once so Taleweaver creates its data folder and default files.
-4. Edit `plugins/Taleweaver/config.yml` with the MariaDB host, database, credentials, and port.
-5. Restart the server. A reload is not enough when changing SQL connection settings.
-6. Grant administrators `taleweaver.lore`, `taleweaver.review`, `taleweaver.ai`, and the version permissions as needed.
-7. Run `/lore info` and `/journal inspect` in-game to verify the installation.
-
-The plugin soft-depends on integrations rather than requiring them. Install only the integrations used by the server; Taleweaver detects enabled plugins at runtime and registers the matching handlers.
-
-## First-use workflow
-
-### Administrators
-
-1. Configure SQL and restart.
-2. Run `/lore auto-create Vanilla` to seed vanilla registries enabled in `config.yml`.
-3. Install supported content plugins, restart, then run `/lore auto-create <HookName>` for the integrations you want to import.
-4. Use `/lore show` to browse the catalogue and `/lore edit <reference>` to write descriptions.
-5. Use `/lore parent set <child> <parent>` for inheritance and `/lore relation set <source> <target>` for directional relations.
-6. Enable revisions before a production content pass so edits and restores remain auditable.
-
-### Players
-
-Players discover lore through configured discovery events, `/journal inspect`, and supported integration bridges. They can open `/journal`, filter unread or recent entries, favourite entries, write private notes, and submit description suggestions when permitted.
-
-## How the lore graph works
-
-Every entry has a UUID, display name, description, normalized identifier, visibility flags, optional localized content, an optional parent, and zero or more relations.
-
-| Entry type | Typical use | Example identifier |
-| --- | --- | --- |
-| Category | Organize a story or content branch | `@Category:[main_story]` |
-| Item | A Bukkit item stack | `@Vanilla:[diamond_sword]` |
-| Entity | A Bukkit entity type or hooked mob | `@Vanilla:[zombie]` |
-| Location | A world and coordinate | resolved by the location hook |
-| Executable | A skill or command-like target | `@Vanilla:[command_spawn]` |
-| Reference | A typed external object | `@Reference:[faction:iron_legion]` |
-| Meta | Generic lore metadata | generated UUID / editor entry |
-
-Parents are a single inheritance link. Relations are explicit, bidirectional graph edges with separate source-side and target-side text, for example `drops` / `is dropped by`.
-
-Identifiers are the stable integration boundary. Names are for display and may change; commands, hooks, journal entries, and API consumers should prefer identifiers or UUIDs.
-
-## Visibility and progression
-
-The editor exposes `published` and `discoverable` flags. A player journal only accepts player-visible lore, and discovery is idempotent: discovering the same lore again does not create duplicate journal rows or fire another discovery pair.
-
-An unpublished or non-discoverable entry can still be used by administrators and by configured AI context, but it should not be treated as player-facing content.
-
-## Optional features
-
-### Revisions
-
-Revisions are enabled by default. Each meaningful save creates an immutable version, existing lore can receive a `MIGRATED` version during startup, and restoring an old version appends a new version rather than rewriting history. See [Configuration](configuration.md) and [API Information](api_information.md).
-
-### AI authoring and NPCs
-
-AI is disabled by default and requires both `AI.Enabled: true` and an explicit provider. Generated text enters the suggestion queue; it never becomes live lore automatically. NPC conversations additionally require `AI.NPC.Enabled: true` and a supported Citizens or FancyNpcs NPC profile. See [Commands](commands.md) and [Configuration](configuration.md).
-
-### Resource-pack icons
-
-When custom model data is enabled, Taleweaver generates `TaleweaverRP.zip`, assigns custom model data to lore icons, and can serve the pack from its embedded HTTP endpoint. Configure the delivery URL carefully if the server is behind a proxy or external host.
-
-## Supported integrations
-
-The current hook surface includes vanilla registries plus HeadDatabase, ModelEngine, Citizens, CraftEngine, Divinity, EcoItems, Fabled, FancyNpcs, Fusion, AuraSkills, Jobs, mcMMO, MyPet, MythicMobs, ItemsAdder, MMOItems, NotQuests, Nexo, Oraxen, Quests, Slimefun, MythicDungeons, and WorldGuard.
-
-Integration availability is capability-based. A missing optional plugin does not prevent Taleweaver from loading; its handlers and discovery bridges are simply absent.
-
-## Documentation map
-
-| Section | Use it for |
+| Requirement | Value |
 | --- | --- |
-| [Commands](commands.md) | Player and administrator command syntax, permissions, and workflows |
-| [Configuration](configuration.md) | SQL, startup, journal, revisions, AI, resource packs, relations, and translations |
-| [API Information](api_information.md) | Java integration, events, hooks, models, persistence behavior, and extension guidance |
+| Release covered | `1.2.2` |
+| Server | Paper compatible with API `26.1.1` |
+| Java | Java 25 or newer |
+| Database | MariaDB reachable from the Paper server |
+| Additional plugins | Optional. Install only the integrations your server uses |
 
-## Operational boundaries
+## Install
 
-- SQL credentials are read at startup; restart after changing connection settings.
-- Lore mutations should be performed on the server thread when called from another plugin.
-- AI providers are lazy, but enabling Hugging Face local inference may download a model on the first request.
-- Relation add/remove currently expose cancellable pre-events, not post-events.
-- `LoreMeta<T>.value` is not persisted by the current editor metadata contract.
-- Back up the MariaDB database before large imports, retention changes, or restores.
+1. Put the Taleweaver JAR in the server's `plugins` directory.
+2. Start the server to generate `plugins/Taleweaver/config.yml`.
+3. Set the MariaDB host, database, account, and password. The account needs access to the target schema and must be able to create or migrate Taleweaver's tables.
+4. Restart and check the console for database, lore-cache, or hook-loading errors. Run `/lore help` in game to open the staff guide.
+
+## Create a first discovery
+
+1. On `1.2.2`, find a valid vanilla item reference with Tab after `/lore create item`. For example, use `/lore create item @Vanilla:[compass] Wayfarer's Compass`.
+2. Add a description in the editor and check that **Published** and **Discoverable by Players** are both enabled. Save the changes.
+3. Hold a matching compass and run `/journal inspect`, or discover the item through normal play. Check the result in `/journal`.
+
+## How lore fits together
+
+| Concept | Use |
+| --- | --- |
+| Reference | Attaches lore to content, such as an item, region, quest or skill |
+| Free-form lore | Stores an authored entry without a game-object reference |
+| Category | Groups entries into a branch of the library |
+| Parent | Gives an entry one place in the hierarchy |
+| Relationship | Connects two entries with text for each direction, such as “drops” and “is dropped by” |
+| Discovery | Adds a published and discoverable entry to one player's journal |
+
+Players can search their discovered entries, filter by type or category, mark favourites and keep private notes. Suggestions, revision history, AI, NPC conversations and generated resource-pack icons are optional. Free-form lore and categories need a discovery path, such as an integration calling the journal API.
+
+## Integrations
+
+| Content | Examples |
+| --- | --- |
+| Items | CraftEngine, Divinity, EcoItems, ItemsAdder, MMOItems, MythicMobs, Nexo, Oraxen, Slimefun |
+| Creatures and NPCs | Citizens, FancyNpcs, ModelEngine, MythicMobs |
+| Regions and dungeons | WorldGuard, MythicDungeons |
+| Quests | NotQuests, Quests |
+| Classes, skills and recipes | AuraSkills, Fabled, Fusion, Jobs, mcMMO, MyPet |
+| Icons | HeadDatabase, generated resource-pack icons |
+
+Available references, discovery events and auto-create support vary by hook. Taleweaver logs the active hooks at startup.

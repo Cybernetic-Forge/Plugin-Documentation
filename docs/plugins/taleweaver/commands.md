@@ -1,179 +1,90 @@
 # Taleweaver Commands
 
-Commands are player-facing and open the plugin's GUIs where an operation needs structured input. All references accept a lore identifier, a lore name, or a UUID where resolution is supported. Several commands also accept contextual aliases such as `held`, `entity`, and `location`.
+This reference covers release `1.2.2`. The development branch's inventory-based create and edit flow is described in **Create & Edit Preview**.
 
-## Permissions
+## Player Commands
+
+| Command | Description | Permission |
+| --- | --- | --- |
+| `/journal help [topic]` | Shows journal help and examples. | Everyone |
+| `/journal [all]` | Opens the journal and its type and category filters. | `taleweaver.journal` |
+| `/journal unread` | Shows unread entries. | `taleweaver.journal` |
+| `/journal favorites` | Shows entries marked as favourites. | `taleweaver.journal` |
+| `/journal recent` | Shows recent discoveries first. | `taleweaver.journal` |
+| `/journal search <text>` | Searches discovered entries. | `taleweaver.journal` |
+| `/journal inspect` | Checks the item in your hand, targeted entity and current location for visible lore. If there are matches and no new discoveries, it attempts to open the first match. | `taleweaver.journal` |
+| `/journal open <reference>` | Opens a specific visible entry you already discovered. | `taleweaver.journal` |
+
+The journal detail dialog lets you mark a favourite or write a private note. With player suggestions enabled, it also offers a way to propose a new description. Only discovered and visible related entries appear in the journal.
+
+While speaking to an AI NPC, `/lore ai npc-stop` stops the conversation for staff with `taleweaver.lore`. Players can also end the session by leaving its configured interaction range.
+
+## Admin Commands
+
+| Command | Description | Permission |
+| --- | --- | --- |
+| `/lore` or `/lore help [topic]` | Opens help for the lore commands and workflows. | Everyone |
+| `/lore show [reference]` | Opens the library or focuses a selected entry. | `taleweaver.lore` |
+| `/lore info [reference]` | Shows the name, type and UUID of a match. With no reference, inspects your held item, target and location. | `taleweaver.lore` |
+| `/lore create category [name]` | Creates a category and opens its editor. | `taleweaver.lore` |
+| `/lore create meta [name]` | Creates free-form lore and opens its editor. | `taleweaver.lore` |
+| `/lore create <type> <value> [name]` | Creates an entry attached to a supported reference. | `taleweaver.lore` |
+| `/lore edit <reference>` | Opens the detail editor for an existing entry. | `taleweaver.lore` |
+| `/lore parent set <entry> <parent>` | Places an entry under another lore entry. | `taleweaver.lore` |
+| `/lore parent remove <entry>` | Moves the entry to the top level. | `taleweaver.lore` |
+| `/lore relation set <source> <target>` | Opens the relation preset dialog for a pair of entries. | `taleweaver.lore` |
+| `/lore relation remove <source> <target>` | Removes the relationship in both directions. | `taleweaver.lore` |
+| `/lore auto-create <hook> [hook...]` | Collects content from the selected integrations and processes entry and relation creation in batches. | `taleweaver.lore` |
+| `/lore review` | Opens the queue for player suggestions and AI drafts. | `taleweaver.lore` and `taleweaver.review` |
+| `/lore reload` | Reloads the main config, help, AI setup and lore cache. | `taleweaver.lore` |
+
+Help also works as text in the server console. Operational commands require an in-game player. `/lore create` without arguments opens the create help topic in `1.2.2`. The older form `/lore create reference <type> <value> [name]` is also accepted in this release.
+
+### Choosing a reference
+
+Use a UUID, exact identifier, or exact title where the command resolves an existing entry. Use UUIDs for duplicate titles. Titles with spaces work in commands that take a single trailing reference. For commands with several arguments, use identifiers or UUIDs to keep each reference in one argument.
+
+| Shortcut | Resolves to |
+| --- | --- |
+| `held`, `item` | Lore for the item in your main hand |
+| `entity`, `target`, `look` | Lore for the targeted entity |
+| `location`, `here` | Lore for your current location |
+
+The create command offers active reference types and supported values through Tab completion. For example, `/lore create item @Vanilla:[compass] Wayfarer's Compass` creates a reference with a custom title. A reference can already have a lore entry. Use the edit command when it does.
+
+### Browser, publishing and review
+
+- Left-click an entry to browse its hierarchy or relations. Right-click opens relations when available. Shift-left-click opens the editor.
+- **Technical details** reveals identifiers and UUIDs. Both **Published** and **Discoverable by Players** must be enabled for players to see and discover an entry.
+- Publishing enables discovery through the appropriate mechanic. Each player earns their own discovery.
+- With revisions enabled, use **Version history** on a focused entry to compare earlier versions. Restoration asks for confirmation and records a new revision.
+- The review queue compares the current, original and proposed descriptions. Applying a suggestion rechecks its original base. Reviewers can reject an outdated or unsuitable proposal.
+
+## AI Commands
+
+These subcommands require both `taleweaver.lore` and `taleweaver.ai`, except `npc-stop` as noted above. See **AI & NPCs** for the provider and NPC setup workflow.
+
+| Command | Description |
+| --- | --- |
+| `/lore ai status` | Shows the configured provider and availability. |
+| `/lore ai usage` | Reports your recorded and estimated token usage for the last hour. |
+| `/lore ai generate <kind> <reference> <prompt>` | Creates a reviewable draft. Kinds include `description`, `biography`, `relations`, `rumor`, `book`, and `dialogue`. |
+| `/lore ai check [reference]` | Checks the configured lore context for possible consistency issues. |
+| `/lore ai npc-setup` | Opens setup for the targeted supported NPC. |
+| `/lore ai function-setup [function-id]` | Opens the NPC function editor. |
+| `/lore ai npc-stop` | Ends your current NPC conversation. |
+
+Use a single-token reference or the detail editor's AI button for generation. The command treats the remaining arguments as the prompt.
+
+## Permission defaults
 
 | Permission | Default | Purpose |
 | --- | --- | --- |
-| `taleweaver.lore` | Operator | Open and manage the lore catalogue |
-| `taleweaver.journal` | Everyone | Use the personal journal |
-| `taleweaver.suggest` | Everyone | Submit player description suggestions |
-| `taleweaver.review` | Operator | Review and apply/reject suggestions |
-| `taleweaver.ai` | Operator | Use AI authoring, audits, and NPC setup |
-| `taleweaver.ai.npc.interact` | Everyone | Talk to configured AI NPCs |
-| `taleweaver.versions.view` | Operator | View revision history and comparisons |
-| `taleweaver.versions.restore` | Operator | Restore a previous revision |
-
-The command declarations themselves gate `/lore` with `taleweaver.lore` and `/journal` with `taleweaver.journal`. AI NPC interaction is separately checked at interaction time.
-
-## `/lore`
-
-### Open and inspect lore
-
-```text
-/lore show
-/lore show <reference>
-/lore info
-/lore info <reference>
-```
-
-`show` opens the icon-first lore browser. Without a reference it opens the catalogue; with a reference it opens the corresponding branch. Shift-left-clicking an entry opens its editor. The browser separates hierarchy from explicit relations and can reveal technical details such as identifiers and UUIDs.
-
-`info` prints compact information for the held item, targeted entity, and current location when no reference is supplied. With a reference it prints information for that entry.
-
-Supported contextual references include:
-
-| Alias | Resolution |
-| --- | --- |
-| `held` / `item` | Lore for the item in the main hand |
-| `entity` / `target` / `look` | Lore for the entity being looked at |
-| `location` / `here` | Lore for the current location |
-
-### Create lore
-
-```text
-/lore create category <name>
-/lore create meta <name>
-/lore create <reference-type> <reference-value> <name>
-/lore create reference <reference-type> <reference-value> <name>
-```
-
-The short form is preferred for registered reference types. The `reference` form is retained for compatibility. After creation, Taleweaver opens the editor so the author can set description, visibility, localized content, and other available fields.
-
-Examples:
-
-```text
-/lore create category Main Story
-/lore create quest ancient_ruins Ancient Ruins
-/lore create faction iron_legion Iron Legion
-```
-
-Reference values are validated by the registered handler. A duplicate resolved identifier is rejected.
-
-### Edit and reload
-
-```text
-/lore edit <reference>
-/lore reload
-```
-
-`edit` opens the editor for an existing entry. `reload` reloads configuration, AI providers, lore rows, relations, and the in-memory cache. SQL host, database, username, password, and port are read when the SQL manager starts; restart after changing those settings.
-
-### Parent / inheritance
-
-```text
-/lore parent set <child> <parent>
-/lore parent remove <child>
-```
-
-A child inherits context from one parent. A lore entry cannot be its own parent. Removing a lore entry also clears its parent link and removes child links pointing at it.
-
-### Directional relations
-
-```text
-/lore relation set <source> <target>
-/lore relation remove <source> <target>
-```
-
-`set` opens the relation-text dialog. Choose a source-side sentence and a target-side sentence, such as `drops` / `is dropped by`. `remove` deletes both directions of the stored edge. Relation text presets and auto-create defaults are configured in `relations.yml`.
-
-### Auto-create
-
-```text
-/lore auto-create Vanilla
-/lore auto-create MythicMobs ItemsAdder MMOItems
-```
-
-Auto-create imports lore and relation candidates from the selected enabled hooks. The operation runs in two phases:
-
-1. handlers gather work asynchronously;
-2. creation and relation writes execute in main-thread batches of 25.
-
-Progress, skipped operations, and failures are reported in chat and logged. Use only hooks that are installed and enabled; invalid names are ignored with feedback.
-
-### Suggestions and review
-
-```text
-/lore review
-```
-
-Players submit suggestions from a discovered journal entry when they have `taleweaver.suggest`. Operators open the review queue with `/lore review` and can compare the original-at-submission description, the current live description, and the proposed text.
-
-Applying a suggestion checks the base description captured at submission time. If an administrator changed the live description meanwhile, the suggestion becomes `STALE` and cannot overwrite the newer edit.
-
-### AI commands
-
-AI commands require `taleweaver.ai`, `AI.Enabled: true`, and a valid configured provider except for `status` and `usage`, which are useful for diagnosing setup.
-
-```text
-/lore ai status
-/lore ai usage
-/lore ai generate <kind> <reference> <prompt>
-/lore ai check
-/lore ai check <reference>
-/lore ai npc-setup
-/lore ai npc-stop
-/lore ai function-setup [function-id]
-```
-
-Generation kinds:
-
-```text
-description | biography | relations | rumor | book | dialogue
-```
-
-Generated content is submitted as a reviewable suggestion; it is not saved directly to the lore table. `check` audits either the complete catalogue or one target and reports semantic, factual, inheritance, and relation conflicts. Warnings are not persisted.
-
-`npc-setup` configures the NPC you are looking at. `function-setup` edits a reusable NPC function. `npc-stop` is available to end the current conversation and is handled before the administrator permission check so an interacting player can stop their own session.
-
-## `/journal`
-
-```text
-/journal
-/journal all
-/journal unread
-/journal favorites
-/journal recent
-/journal search <text>
-/journal open <reference>
-/journal inspect
-```
-
-| Subcommand | Behavior |
-| --- | --- |
-| no argument / `all` | Open all discovered, player-visible entries |
-| `unread` | Show entries not yet opened |
-| `favorites` | Show entries marked as favourites |
-| `recent` | Show newest discoveries first |
-| `search <text>` | Search names, descriptions, identifiers, and private notes |
-| `open <reference>` | Open one discovered entry by identifier, name, or UUID |
-| `inspect` | Discover lore for the held item, targeted entity, and current location |
-
-Opening an entry marks it read once. The entry dialog supports favourite toggling, private notes, relation browsing, and a description suggestion action. Notes are stored per player and are never visible to other players.
-
-`inspect` uses a ten-block entity target range and the current location. It discovers matching player-visible lore with source `journal:inspect`; if the lore is already known, it opens the known entry instead.
-
-## Typical content-authoring session
-
-```text
-/lore auto-create MythicMobs
-/lore show
-/lore edit @MythicMobs:ancient_guardian
-/lore parent set @MythicMobs:ancient_guardian @Category:[main_story]
-/lore relation set @MythicMobs:ancient_guardian @Reference:[quest:ancient_ruins]
-/lore ai generate description @MythicMobs:ancient_guardian Write a concise in-world description.
-/lore review
-```
-
-Use the AI command only when the provider is configured. The final `/lore review` step is always required for generated text.
+| `taleweaver.lore` | Operator | Lore catalogue and staff commands |
+| `taleweaver.journal` | Everyone | Discover and browse personal lore |
+| `taleweaver.suggest` | Everyone | Propose descriptions when `Journal.PlayerSuggestionsEnabled` is enabled |
+| `taleweaver.review` | Operator | Review player proposals and AI drafts |
+| `taleweaver.ai` | Operator | AI authoring, usage, audits and NPC configuration |
+| `taleweaver.ai.npc.interact` | Everyone | Speak to an enabled, configured AI NPC |
+| `taleweaver.versions.view` | Operator | View revision history when enabled |
+| `taleweaver.versions.restore` | Operator | Restore revisions when enabled |

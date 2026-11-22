@@ -15,6 +15,7 @@ Taleweaver creates these files in `plugins/Taleweaver`:
 | `relations.yml` | Directional relation presets, auto-create mappings, and relation-dialog text |
 | `translations.yml` | Player messages, GUI labels, placeholders, and formatting |
 | `gui.yml` | Materials, layouts, browser icons, and GUI presentation |
+| `help.yml` | Topics, examples and presentation for in-game help |
 | `npc-traits.yml` | Trait choices available in the NPC profile editor |
 
 The plugin adds missing defaults on startup. Keep local edits in these files and back them up before upgrades.
@@ -24,9 +25,9 @@ The plugin adds missing defaults on startup. Keep local edits in these files and
 ```yaml
 SQL:
   Host: 127.0.0.1
-  Database: database
-  Username: root
-  Password: password
+  Database: taleweaver
+  Username: taleweaver
+  Password: "<your-database-password>"
   Port: 3306
   ConnectTimeoutMillis: 10000
   SocketTimeoutMillis: 30000
@@ -42,7 +43,7 @@ Taleweaver uses MariaDB and creates the following tables:
 - `Taleweaver_LoreRevisionHeads`
 - AI usage, NPC profile, conversation, vector, and function tables when those features are used
 
-The SQL values are loaded when the process starts. `/lore reload` reloads lore/configuration but does not rebind an already-created SQL connection manager.
+The SQL values are loaded when the process starts. Restart after changing connection settings. `/lore reload` reloads the lore cache and the main config, help and AI settings.
 
 `ConnectTimeoutMillis` bounds connection establishment. `SocketTimeoutMillis` bounds network reads and writes. For production, use a dedicated MariaDB user with only the required database privileges and never keep the default password.
 
@@ -75,12 +76,13 @@ Each `VanillaRegistries` key controls whether that Bukkit registry is exposed to
 ```yaml
 Journal:
   LocationCheckIntervalMillis: 500
+  PlayerSuggestionsEnabled: false
   Notifications:
     Enabled: true
     ClickableMessage: true
 
 Revisions:
-  Enabled: true
+  Enabled: false
   BackfillExistingLore: true
   Retention:
     MaxPerLore: 100
@@ -89,6 +91,8 @@ Revisions:
 ```
 
 Journal discovery state is per player. `LocationCheckIntervalMillis` controls how often location-based discovery checks run. Notifications can be disabled without disabling journal persistence.
+
+Player submissions and revision recording are disabled by default on new installations. Set `Journal.PlayerSuggestionsEnabled: true` and run `/lore reload` to allow players with `taleweaver.suggest` to propose descriptions. The review queue remains available for AI drafts and existing proposals. To record revisions, set `Revisions.Enabled: true` and restart. Existing explicit settings are preserved on upgrade.
 
 Revision behavior:
 
@@ -139,6 +143,8 @@ AI:
 
 Valid built-in providers are `openai`, `ollama-cloud`, `ollama-local`, and `huggingface-local`.
 
+The following settings also belong under `AI`.
+
 ```yaml
   Usage:
     PerPlayerHourlyTokenLimit: 0
@@ -182,7 +188,7 @@ Valid built-in providers are `openai`, `ollama-cloud`, `ollama-local`, and `hugg
     DownloadBaseUrl: https://huggingface.co
 ```
 
-OpenAI, Ollama Cloud, and Hugging Face credentials must not be committed. Hugging Face local inference downloads the GGUF file lazily under `plugins/Taleweaver/models`; install `llama.cpp` separately or point `RuntimeExecutable` to another `llama-cli`-compatible binary.
+Keep OpenAI and Ollama Cloud tokens private. The Hugging Face local option downloads the GGUF file on demand under `plugins/Taleweaver/models`. Install `llama.cpp` separately or point `RuntimeExecutable` to another `llama-cli`-compatible binary.
 
 ### NPC AI
 
@@ -233,11 +239,11 @@ Relation presets have a source-side text, target-side text, and description. The
 
 `AutoCreateDefaults` maps hook-produced pairs such as `entity_to_item`, `class_to_skill`, `class_to_recipe`, and `recipe_to_item` to a preset. Add or replace mappings only when the resulting sentence remains correct in both directions.
 
-## `translations.yml`, `gui.yml`, and traits
+## Help, translations, GUI and traits
 
-`translations.yml` is the supported place to change player-facing wording, colours, GUI titles, placeholders, and clickable messages. `gui.yml` controls materials, slots, widths, and icon presentation. `npc-traits.yml` supplies trait options shown by the NPC profile editor.
+`translations.yml` controls translated messages. `gui.yml` controls inventory materials, slots, widths, labels, and icons. `npc-traits.yml` supplies trait options for the NPC profile editor. Restart after editing these files to ensure the running services use the updated values.
 
-Do not rename placeholder keys unless the corresponding Java message supplies the new key. After editing YAML, run `/lore reload` and check the affected GUI or command path.
+`help.yml` controls the `Journal.Guide` and `Lore.Guide` overviews, topic labels and descriptions, literal usage syntax and examples. Keep topic IDs stable. Help aliases affect lookup inside help. They do not register commands. Run `/lore reload` to apply help changes. Keep the existing placeholder names such as `%name%` in translated strings.
 
 ## Recommended production profile
 

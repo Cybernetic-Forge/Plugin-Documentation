@@ -87,3 +87,5 @@ nav:
           - Commands: plugins/taleweaver/commands.md
           - Configuration: plugins/taleweaver/configuration.md
           - API Information: plugins/taleweaver/api_information.md
+          - AI & NPCs: plugins/taleweaver/ai_and_npcs.md
+          - Create & Edit Preview: plugins/taleweaver/wizard_preview.md
